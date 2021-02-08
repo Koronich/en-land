@@ -43,6 +43,20 @@ class SocialController extends SettingsController
             return $this->render('social/store.tpl', ['h1' => 'Добавить']);
     }
 
+    public function actionEdit($id)
+    {
+        $model = Settings::where('id', $id)->first();
+
+        if(isset($_POST['key']) && isset($_POST['value'])) {
+            $model->key = $_POST['key'];
+            $model->value = $_POST['value'];
+            $model->label = $_POST['label'];
+            $model->save();
+
+            $this->redirect('admin/social');
+        } else
+            return $this->render('social/edit.tpl', ['h1' => 'Редактировать: ', 'model' => $model]);
+    }
 
     public function setOptions($data)
     {
